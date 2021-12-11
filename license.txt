@@ -1,4 +1,4 @@
-in ovenstove.lua there is some copied and edited code from minetest_game, which is under the following license:
+in ovenstove.lua there is some copied and edited code from minetest_game default mod, which is under the following license:
 ----------------------
 
 GNU Lesser General Public License, version 2.1
@@ -26,7 +26,14 @@ ShadowNinja
 VanessaE
 And many others...
 
-jelys_pizzaria_rolling_pin_inv.png
+craftguide_cut_icon.png contains default_sword_steel.png from minetest_game default mod, which is under the following license:
+-------------------------------
+Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
+Attribution 3.0 Unported (CC BY 3.0)
+CC0 1.0 Universal (CC0 1.0) Public Domain Dedication
+See https://github.com/minetest/minetest_game/blob/master/mods/default/license.txt for more infomation
+
+jelys_pizzaria_rolling_pin_inv.png and craftguide_roll_icon.png
 ------------------------------
 Attribution-ShareAlike 3.0 (CC BY-SA 3.0) Extex
 inspired by https://www.brik.co/blogs/pixel-art/rolling-pin-pixel-art

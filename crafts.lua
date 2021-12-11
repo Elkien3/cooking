@@ -68,6 +68,11 @@ cooking.register_craft({
 	recipe = "farming:bread",
 	output = "cooking:bread_sliced 6"
 })
+cooking.register_craft({
+	type = "press",
+	recipe = "default:blueberries",
+	output = "cooking:blueberry_jam 4"
+})
 foodspoil_register("cooking:bread_sliced", 4)
 cooking.register_craft({
 	type = "stack",

@@ -34,20 +34,20 @@ local function table_to_string(tbl)
 end
 
 local crafttypelist = {
-	stack = {"Stacking", "default_tool_steelpick.png"},
-	mix = {"Mixing", "default_tool_steelpick.png"},
-	cut = {"Cutting", "default_tool_steelpick.png"},
-	press = {"Pressing", "default_tool_steelpick.png"},
-	roll = {"Rolling", "default_tool_steelpick.png"},
-	stove = {"Stove", "default_tool_steelpick.png"},
-	oven = {"Oven", "default_tool_steelpick.png"},
-	soup = {"Soup", "default_tool_steelpick.png"},
+	stack = "Stacking",
+	mix = "Mixing",
+	cut = "Cutting",
+	press = "Pressing",
+	roll = "Rolling",
+	stove = "Stove",
+	oven = "Oven",
+	soup = "Soup",
 }
 if craftguide then
 	for craftname, tbl in pairs(crafttypelist) do
 		craftguide.register_craft_type(craftname, {
 			description = tbl[1],
-			icon = tbl[2],
+			icon = "craftguide_"..craftname.."_icon.png",
 		})
 	end
 end
