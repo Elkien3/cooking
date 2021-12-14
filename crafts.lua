@@ -140,7 +140,7 @@ cooking.register_craft({
 --mushroom soup
 minetest.register_craftitem("cooking:mushroom_soup_uncooked", {
 	description = "Uncooked Mushroom Soup",
-	stack_max = 1,
+	--stack_max = 1,
 	inventory_image = "cooking_mushroom_soup_uncooked.png",
 	param2 = 224,
 	on_use = minetest.item_eat(4, "cooking:bowl")
@@ -148,7 +148,7 @@ minetest.register_craftitem("cooking:mushroom_soup_uncooked", {
 foodspoil_register("cooking:mushroom_soup_uncooked", 4)
 minetest.register_craftitem("cooking:mushroom_soup", {
 	description = "Mushroom Soup",
-	stack_max = 1,
+	--stack_max = 1,
 	inventory_image = "cooking_mushroom_soup.png",
 	param2 = 222,
 	on_use = minetest.item_eat(6, "cooking:bowl")
@@ -219,14 +219,22 @@ minetest.register_craft({
 	},
 	output = "cooking:spoon"
 })
-for i, subname in pairs({"wood", "pine_wood", "acacia_wood", "junglewood", "aspen_wood"}) do
-	minetest.register_craft({
-		recipe = {
-			{"stairs:slab_"..subname},
-		},
-		output = "cooking:cutting_board"
-	})
-end
+minetest.register_on_mods_loaded(function()
+	local slablist = {}
+	for name, def in pairs(minetest.registered_nodes) do
+		if string.find(name, "slab") and string.find(name, "wood") then
+			table.insert(slablist, name)
+		end
+	end
+	for i, slabname in pairs(slablist) do
+		minetest.register_craft({
+			recipe = {
+				{slabname},
+			},
+			output = "cooking:cutting_board"
+		})
+	end
+end)
 minetest.register_craft({
 	recipe = {
 		{"default:cobble", "default:cobble", "default:cobble"},
