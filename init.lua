@@ -33,6 +33,17 @@ local function table_to_string(tbl)
 	return str
 end
 
+function split(inputstr, sep)
+	if sep == nil then
+		sep = "%s"
+	end
+	local t={}
+	for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+		table.insert(t, str)
+	end
+	return t
+end
+
 local crafttypelist = {
 	stack = "Stacking",
 	mix = "Mixing",
@@ -66,7 +77,7 @@ cooking.register_craft = function(tbl)
 	assert(tbl.output, "No Craft Output Specified")
 	if unified_inventory or craftguide then
 		local output = table_to_string(tbl.output)
-		for word in string.gmatch(tbl.output, '([^,]+)') do
+		for word in string.gmatch(output, '([^,]+)') do
 			output = word
 			break
 		end
@@ -104,17 +115,22 @@ cooking.register_craft = function(tbl)
 	end
 	if tbl.type == "oven" or tbl.type == "stove" then
 		tbl.recipe = table_to_string(tbl.recipe)
+		if type(tbl.output) == "table" then
+			assert(#tbl.output == 1, "table output that is not of size 1 is not supported for stove/oven crafts")
+			tbl.output = tbl.output[1]
+		end
 		cooking.registered_cookcrafts[tbl.recipe] = {output = tbl.output, time = tbl.cooktime or 10, method = tbl.type}
-		if not cooking.registered_cookcrafts[table_to_string(tbl.output)] then
-			cooking.registered_cookcrafts[table_to_string(tbl.output)] = {output = tbl.burned or "cooking:burnt_food", time = 60, method = tbl.type}
+		if not cooking.registered_cookcrafts[tbl.output] then
+			cooking.registered_cookcrafts[tbl.output] = {output = tbl.burned or "cooking:burnt_food", time = 60, method = tbl.type}
 		end
 	elseif tbl.type == "cut" or tbl.type == "press" or tbl.type == "roll" then
 		tbl.recipe = table_to_string(tbl.recipe)
 		tbl.output = table_to_string(tbl.output)
 		cooking["registered_"..tbl.type.."crafts"][tbl.recipe] = tbl.output
 	elseif tbl.type == "stack" or tbl.type == "mix" or tbl.type == "soup" then
+		tbl.recipe = table_to_string(tbl.recipe)
 		tbl.output = table_to_string(tbl.output)
-		cooking["registered_"..tbl.type.."crafts"][tbl.output] = tbl.recipe
+		cooking["registered_"..tbl.type.."crafts"][tbl.recipe] = tbl.output
 	else
 		assert(nil, "Invalid Craft Type")
 	end
@@ -243,7 +259,7 @@ local function is_stackcraft(tbl)
 end
 
 local function is_mixcraft(tbl, crafttype)
-	if not crafttype then crafttype = "registered_mixcrafts" end--crafttype is not really useful atm, just for a possible soup craft in future
+	if not crafttype then crafttype = "registered_mixcrafts" end
 	if not string.find(crafttype, "registered_") then
 		crafttype = "registered_"..crafttype
 	end
@@ -253,7 +269,8 @@ local function is_mixcraft(tbl, crafttype)
 		local stackname = ItemStack(stackstring):get_name()
 		table.insert(stacknames, stackname)
 	end
-	for name, craft in pairs(cooking[crafttype]) do
+	for craftstring, name in pairs(cooking[crafttype]) do
+		local craft = split(craftstring, ",")
 		local tblcopy = table.copy(stacknames)
 		if #stacknames == #craft then
 			for i, name in pairs(craft) do
@@ -265,10 +282,11 @@ local function is_mixcraft(tbl, crafttype)
 						break
 					end
 				end
-				if not hasitem then return end
+				if not hasitem then goto next end
 			end
 		end
 		if #tblcopy == 0 then return name end
+		::next::
 	end
 end
 
