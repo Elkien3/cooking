@@ -251,7 +251,8 @@ local function is_stackcraft(tbl)
 		local stackname = ItemStack(stackstring):get_name()
 		table.insert(stacknames, stackname)
 	end
-	for name, craft in pairs(cooking.registered_stackcrafts) do
+	for craftstring, name in pairs(cooking.registered_stackcrafts) do
+		local craft = split(craftstring, ",")
 		if table.concat(stacknames) == table.concat(craft) then
 			return name
 		end
