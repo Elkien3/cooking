@@ -156,6 +156,14 @@ local function furnace_node_timer(pos, elapsed)
 					--if inv:room_for_item("dst", aftercooked.items[1]) then
 						--inv:add_item("dst", aftercooked.items[1])
 						local item = cooked.item
+						if type(item) == "table" then
+							item = item[1]
+							for i, item in pairs(cooked.item) do
+								if i ~= 1 then
+									minetest.add_item(pos, cooked.item[i])
+								end
+							end
+						end
 						inv:set_stack("src", 1, item)
 						cooking.update_furnace_objects(pos)
 						src_time = src_time - cooked.time

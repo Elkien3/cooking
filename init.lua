@@ -115,13 +115,13 @@ cooking.register_craft = function(tbl)
 	end
 	if tbl.type == "oven" or tbl.type == "stove" then
 		tbl.recipe = table_to_string(tbl.recipe)
-		if type(tbl.output) == "table" then
-			assert(#tbl.output == 1, "table output that is not of size 1 is not supported for stove/oven crafts")
-			tbl.output = tbl.output[1]
+		local output_main = tbl.output
+		if type(output_main) == "table" then
+			output_main = output_main[1]
 		end
 		cooking.registered_cookcrafts[tbl.recipe] = {output = tbl.output, time = tbl.cooktime or 10, method = tbl.type}
-		if not cooking.registered_cookcrafts[tbl.output] then
-			cooking.registered_cookcrafts[tbl.output] = {output = tbl.burned or "cooking:burnt_food", time = 60, method = tbl.type}
+		if not cooking.registered_cookcrafts[output_main] then
+			cooking.registered_cookcrafts[output_main] = {output = tbl.burned or "cooking:burnt_food", time = 60, method = tbl.type}
 		end
 	elseif tbl.type == "cut" or tbl.type == "press" or tbl.type == "roll" then
 		tbl.recipe = table_to_string(tbl.recipe)
