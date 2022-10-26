@@ -11,11 +11,11 @@ cooking.register_craft({
 if not foodspoil_register then foodspoil_register = function() end end
 
 --breads
-minetest.register_craftitem("cooking:bun", {
+minetest.register_craftitem("cooking:bun_uncooked", {
 	description = "Uncooked Bun",
 	inventory_image = "cooking_bun_uncooked.png",
 })
-minetest.register_craftitem("cooking:bun_cooked", {
+minetest.register_craftitem("cooking:bun", {
 	description = "Bun",
 	on_use = minetest.item_eat(4),
 	inventory_image = "cooking_bun.png",
@@ -88,13 +88,13 @@ cooking.register_craft({
 cooking.register_craft({
 	type = "cut",
 	recipe = "farming:flour",
-	output = "cooking:bun 4"
+	output = "cooking:bun_uncooked 4"
 })
 cooking.register_craft({
 	type = "oven",
 	cooktime = 10,
-	recipe = "cooking:bun",
-	output = "cooking:bun_cooked"
+	recipe = "cooking:bun_uncooked",
+	output = "cooking:bun"
 })
 
 --apple pie
@@ -117,7 +117,7 @@ minetest.register_craftitem("cooking:pie_crust", {
 })
 cooking.register_craft({
 	type = "roll",
-	recipe = "cooking:bun",
+	recipe = "cooking:bun_uncooked",
 	output = "cooking:pie_crust"
 })
 cooking.register_craft({
