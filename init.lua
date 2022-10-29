@@ -736,10 +736,17 @@ local function pot_on_punch(pos, node, player, replacement)
 	local meta = minetest.get_meta(pos)
 	local player_inv = player:get_inventory()
 	local itemstack = player:get_wielded_item()
-	if itemstack:get_name() == "cooking:bowl" and meta:get_string("soup") ~= "" then
+	local soupstring = meta:get_string("soup")
+	local soupdef
+	if soupstring ~= "" then soupdef = minetest.registered_items[soupstring] end
+	local bowlstring = (soupdef and soupdef._soup_container) or "cooking:bowl"
+	if soupstring ~= "" and itemstack:get_name() == bowlstring then
 		node.name = replacement
 		minetest.swap_node(pos, node)
-		itemstack:take_item(1)
+		local bowldef = minetest.registered_items[bowlstring]
+		if bowldef._soup_swap ~= false then
+			itemstack:take_item(1)
+		end
 		if itemstack:get_count() > 0 then
 			minetest.add_item(pos, player_inv:add_item("main", meta:get_string("soup")))
 		else
