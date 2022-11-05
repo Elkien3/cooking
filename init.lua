@@ -747,10 +747,11 @@ local function pot_on_punch(pos, node, player, replacement)
 		if bowldef._soup_swap ~= false then
 			itemstack:take_item(1)
 		end
+		if soupdef and soupdef._soup_item then soupstring = soupdef._soup_item end
 		if itemstack:get_count() > 0 then
-			minetest.add_item(pos, player_inv:add_item("main", meta:get_string("soup")))
+			minetest.add_item(pos, player_inv:add_item("main", soupstring))
 		else
-			itemstack:replace(meta:get_string("soup"))
+			itemstack:replace(soupstring)
 		end
 		player:set_wielded_item(itemstack)
 		if replacement == "cooking:pot_0" then
