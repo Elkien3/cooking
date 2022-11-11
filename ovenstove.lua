@@ -156,9 +156,7 @@ local function furnace_node_timer(pos, elapsed)
 					--if inv:room_for_item("dst", aftercooked.items[1]) then
 						--inv:add_item("dst", aftercooked.items[1])
 						local item = cooked.item
-						minetest.chat_send_all("1")
 						if cooked.replacements then
-							minetest.chat_send_all("2")
 							if type(cooked.replacements) == "string" then
 								minetest.add_item(pos, cooked.replacements)
 							else
