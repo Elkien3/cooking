@@ -156,11 +156,14 @@ local function furnace_node_timer(pos, elapsed)
 					--if inv:room_for_item("dst", aftercooked.items[1]) then
 						--inv:add_item("dst", aftercooked.items[1])
 						local item = cooked.item
-						if type(item) == "table" then
-							item = item[1]
-							for i, item in pairs(cooked.item) do
-								if i ~= 1 then
-									minetest.add_item(pos, cooked.item[i])
+						minetest.chat_send_all("1")
+						if cooked.replacements then
+							minetest.chat_send_all("2")
+							if type(cooked.replacements) == "string" then
+								minetest.add_item(pos, cooked.replacements)
+							else
+								for i, item in pairs(cooked.replacements) do
+									minetest.add_item(pos, cooked.replacements[i])
 								end
 							end
 						end

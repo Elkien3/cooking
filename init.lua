@@ -115,11 +115,14 @@ cooking.register_craft = function(tbl)
 	end
 	if tbl.type == "oven" or tbl.type == "stove" then
 		tbl.recipe = table_to_string(tbl.recipe)
-		local output_main = tbl.output
-		if type(output_main) == "table" then
-			output_main = output_main[1]
+		local output_main
+		if type(tbl.output) == "table" then
+			output_main = tbl.output[1]
+			assert(#tbl.output == 1, "oven/stove crafts must have only 1 output, use replacements for anything else.")
+		else
+			output_main = tbl.output
 		end
-		cooking.registered_cookcrafts[tbl.recipe] = {output = tbl.output, time = tbl.cooktime or 10, method = tbl.type}
+		cooking.registered_cookcrafts[tbl.recipe] = {output = tbl.output, time = tbl.cooktime or 10, method = tbl.type, replacements = tbl.replacements}
 		if not cooking.registered_cookcrafts[output_main] then
 			cooking.registered_cookcrafts[output_main] = {output = tbl.burned or "cooking:burnt_food", time = 60, method = tbl.type}
 		end
@@ -411,6 +414,8 @@ function cooking.get_craft_result(tbl)
 	if craft.method ~= method then return empty end
 	if type(craft.output) == "string" then
 		craft.output = ItemStack(craft.output)
+	elseif type(craft.output) == "table" then
+		craft.output = ItemStack(craft.output[1])
 	end
 	if cooking_aftercraft then
 		if soup then
