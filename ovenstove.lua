@@ -313,7 +313,7 @@ local ovenstovedef = {
 	drawtype = "mesh",
 	paramtype = "light",
 	paramtype2 = "facedir",
-	groups = {cracky=2, cookingholder = 1, furnace = 1},
+	groups = {cracky=2, cookingholder = 1, furnace = 1, smokey = 4},
 	legacy_facedir_simple = true,
 	is_ground_content = false,
 	sounds = default.node_sound_stone_defaults(),
