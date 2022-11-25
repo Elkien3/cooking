@@ -313,7 +313,7 @@ local ovenstovedef = {
 	drawtype = "mesh",
 	paramtype = "light",
 	paramtype2 = "facedir",
-	groups = {cracky=2, cookingholder = 1, furnace = 1, smokey = 4},
+	groups = {cracky=2, cookingholder = 1, furnace = 1},
 	legacy_facedir_simple = true,
 	is_ground_content = false,
 	sounds = default.node_sound_stone_defaults(),
@@ -425,6 +425,7 @@ ovenstovedef = {
 ovenstovedef.description = S("Oven")
 ovenstovedef.mesh = "wood_oven.b3d"
 ovenstovedef.tiles = {"wood_oven_uv.png^fireboi.png"}
+ovenstovedef.groups = {cracky=2, cookingholder = 1, furnace = 1, smokey = 4},
 ovenstovedef.use_texture_alpha = true
 ovenstovedef.selection_box = {
 	type = "fixed",
