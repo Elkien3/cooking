@@ -341,7 +341,7 @@ local crafter_on_dig = function(pos, node, digger, craftfunc, successfunc, nodig
 			   table.insert(results, substring)
 			end
 		end
-		if results and #results > 0 then
+		if results and #results > 0 and (not class_get or not digger or not digger:get_player_name() or class_get(digger:get_player_name(), "cook")) then
 			for i, result in pairs(results) do
 				cooking.remove_items(pos, true, tbl)
 				local itemstack = ItemStack(result)
