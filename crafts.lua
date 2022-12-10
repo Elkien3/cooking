@@ -90,12 +90,14 @@ cooking.register_craft({
 cooking.register_craft({
 	type = "stack",
 	recipe = {"cooking:bread_sliced", "cooking:blueberry_jam"},
-	output = "cooking:bread_blueberry_jam"
+	output = "cooking:bread_blueberry_jam",
+	_cookingsimple = true
 })
 cooking.register_craft({
 	type = "stack",
 	recipe = {"cooking:toast", "cooking:blueberry_jam"},
-	output = "cooking:toast_blueberry_jam"
+	output = "cooking:toast_blueberry_jam",
+	_cookingsimple = true
 })
 cooking.register_craft({
 	type = "cut",
@@ -163,7 +165,8 @@ minetest.register_craftitem("cooking:mushroom_soup_uncooked", {
 	--stack_max = 1,
 	inventory_image = "cooking_mushroom_soup_uncooked.png",
 	param2 = 224,
-	on_use = minetest.item_eat(4, "cooking:bowl")
+	on_use = minetest.item_eat(4, "cooking:bowl"),
+	_cookingsimple = true
 })
 foodspoil_register("cooking:mushroom_soup_uncooked", 14)
 

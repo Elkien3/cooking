@@ -331,6 +331,18 @@ local function is_soupcraft(tbl)
 	return is_mixcraft(tbl, "registered_soupcrafts")
 end
 
+local function is_cookable_by_player(digger, results, craftfunc)
+	if
+		(not class_get or not digger or not digger:get_player_name() or class_get(digger:get_player_name(), "cook")) or
+		(craftfunc ~= is_soupcraft and craftfunc ~= is_mixcraft and craftfunc ~= is_stackcraft) or
+		(#results == 1 and minetest.registered_items[results[1]] and minetest.registered_items[results[1]]._cookingsimple)
+	then
+		return true
+	else
+		return false
+	end
+end
+
 local crafter_on_dig = function(pos, node, digger, craftfunc, successfunc, nodignode)
 	local meta = minetest.get_meta(pos)
 	local tbl = minetest.deserialize(meta:get_string("table"))
@@ -341,7 +353,7 @@ local crafter_on_dig = function(pos, node, digger, craftfunc, successfunc, nodig
 			   table.insert(results, substring)
 			end
 		end
-		if results and #results > 0 and (not class_get or not digger or not digger:get_player_name() or class_get(digger:get_player_name(), "cook")) then
+		if results and #results > 0 and is_cookable_by_player(digger, results, craftfunc) then
 			for i, result in pairs(results) do
 				cooking.remove_items(pos, true, tbl)
 				local itemstack = ItemStack(result)
