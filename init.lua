@@ -642,6 +642,10 @@ end
 for name, value in pairs({wood = 8, stone = 6, bronze = 4, steel = 4, mese = 4, diamond = 4}) do
 	register_cutter("default:sword_"..name, value)
 end
+if minetest.get_modpath("moreores") then
+	register_cutter("moreores:sword_silver", 4)
+	register_cutter("moreores:sword_mithril", 4)
+end
 --add any more swords/knives here
 
 
