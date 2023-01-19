@@ -108,6 +108,15 @@ function register_base_machine(data)
 				meta:set_int("src_time", round(result.time*10))
 				return
 			end--]]
+			if result.replacements then
+				if type(result.replacements) == "string" then
+					minetest.add_item(pos, result.replacements)
+				else
+					for i, item in pairs(result.replacements) do
+						minetest.add_item(pos, result.replacements[i])
+					end
+				end
+			end
 			meta:set_int("src_time", meta:get_int("src_time") - round(result.time*10))
 			inv:set_stack("src", 1, result.item)
 			cooking.update_furnace_objects(pos)
