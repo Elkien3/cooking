@@ -168,7 +168,7 @@ function cooking.get_item_offset(node, index)
 			offset = offset["input"] or {x=0,y=-.45,z=0}
 		end
 	end
-	local yaw = minetest.facedir_to_dir(node.param2)
+	local yaw = minetest.facedir_to_dir(node.param2) or vector.new(0,0,1)
 	yaw = minetest.dir_to_yaw(yaw)
 	offset = vector.rotate(offset, {x=0,y=yaw,z=0})
 	if type(index) == "number" then
@@ -182,7 +182,7 @@ local function add_item(pos, stack, param2, flatten)
 	local obj = minetest.add_entity(pos, "cooking:item", stack:to_string())
 	if not obj then return nil end
 	local itemdef = minetest.registered_items[stackname]
-	local yaw = minetest.facedir_to_dir(param2)
+	local yaw = minetest.facedir_to_dir(param2) or vector.new(0,0,1)
 	yaw = minetest.dir_to_yaw(yaw)
 	yaw = yaw + math.random(-20,20)/100
 	if itemdef.inventory_image == "" then
@@ -742,10 +742,15 @@ minetest.register_node("cooking:hand_press", {
 })
 
 --Soup Pot
-
+local droptbl = {}--bit of a hack
 local function on_soup_craft(pos, node, digger, itemstack)
+	if droptbl[minetest.pos_to_string(pos)] then
+		minetest.add_item(pos, itemstack)
+		return
+	end
+	droptbl[minetest.pos_to_string(pos)] = true
+	minetest.after(0, function() droptbl[minetest.pos_to_string(pos)] = nil end)
 	local itemname = itemstack:get_name()
-	local recipedef = cooking.registered_soupcrafts[itemname]
 	node.param2 = minetest.registered_items[itemname].param2 or node.param2
 	minetest.swap_node(pos, node)
 	local meta = minetest.get_meta(pos)
