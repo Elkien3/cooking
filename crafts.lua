@@ -8,55 +8,65 @@ cooking.register_craft({
 	output = "cooking:sugar"
 })
 
-if not foodspoil_register then foodspoil_register = function() end end
+local fs_f = 2
+local fs_m = 7
+local fs_s = 14
+local fs_reg = function()
+
+if foodspoil then
+	fs_reg = foodspoil_register
+	fs_f = foodspoil.fast
+	fs_m = foodspoil.medium
+	fs_s = foodspoil.slow
+end
 
 --breads
 minetest.register_craftitem("cooking:bun_uncooked", {
 	description = "Uncooked Bun",
 	inventory_image = "cooking_bun_uncooked.png",
 })
-foodspoil_register("cooking:bun_uncooked", 7)
+fs_reg("cooking:bun_uncooked", fs_m)
 
 minetest.register_craftitem("cooking:bun", {
 	description = "Bun",
 	on_use = minetest.item_eat(4),
 	inventory_image = "cooking_bun.png",
 })
-foodspoil_register("cooking:bun", 7)
+fs_reg("cooking:bun", fs_m)
 
 minetest.register_craftitem("cooking:bread_sliced", {
 	description = "Sliced Bread",
 	on_use = minetest.item_eat(3),
 	inventory_image = "cooking_bread_sliced.png",
 })
-foodspoil_register("cooking:bread_sliced", 7)
+fs_reg("cooking:bread_sliced", fs_m)
 
 minetest.register_craftitem("cooking:toast", {
 	description = "Toast",
 	on_use = minetest.item_eat(4),
 	inventory_image = "cooking_toast.png",
 })
-foodspoil_register("cooking:toast", 14)
+fs_reg("cooking:toast", fs_m)
 
 minetest.register_craftitem("cooking:bread_blueberry_jam", {
 	description = "Bread with Blueberry Jam",
 	inventory_image = "cooking_bread_blueberry_jam.png",
 	on_use = minetest.item_eat(5),
 })
-foodspoil_register("cooking:bread_blueberry_jam", 14)
+fs_reg("cooking:bread_blueberry_jam", fs_f)
 
 minetest.register_craftitem("cooking:toast_blueberry_jam", {
 	description = "Toast with Blueberry Jam",
 	inventory_image = "cooking_toast_blueberry_jam.png",
 	on_use = minetest.item_eat(6),
 })
-foodspoil_register("cooking:toast_blueberry_jam", 14)
+fs_reg("cooking:toast_blueberry_jam", fs_f)
 
 minetest.register_craftitem("cooking:blueberry_jam", {
 	description = "Blueberry Jam",
 	inventory_image = "cooking_blueberry_jam.png",
 })
-foodspoil_register("cooking:blueberry_jam", 14)
+fs_reg("cooking:blueberry_jam", fs_s)
 
 minetest.clear_craft({output = "farming:bread"})
 minetest.clear_craft({output = "farming:flour"})
@@ -90,14 +100,12 @@ cooking.register_craft({
 cooking.register_craft({
 	type = "stack",
 	recipe = {"cooking:bread_sliced", "cooking:blueberry_jam"},
-	output = "cooking:bread_blueberry_jam",
-	_cookingsimple = true
+	output = "cooking:bread_blueberry_jam"
 })
 cooking.register_craft({
 	type = "stack",
 	recipe = {"cooking:toast", "cooking:blueberry_jam"},
-	output = "cooking:toast_blueberry_jam",
-	_cookingsimple = true
+	output = "cooking:toast_blueberry_jam"
 })
 cooking.register_craft({
 	type = "cut",
@@ -116,26 +124,26 @@ minetest.register_craftitem("cooking:chopped_apple", {
 	description = "Chopped Apple",
 	inventory_image = "cooking_chopped_apple.png",
 })
-foodspoil_register("cooking:chopped_apple", 7)
+fs_reg("cooking:chopped_apple", fs_m)
 
 minetest.register_craftitem("cooking:apple_pie_uncooked", {
 	description = "Uncooked Apple Pie",
 	inventory_image = "cooking_apple_pie_uncooked.png",
 })
-foodspoil_register("cooking:apple_pie_uncooked", 14)
+fs_reg("cooking:apple_pie_uncooked", fs_m)
 
 minetest.register_craftitem("cooking:apple_pie", {
 	description = "Apple Pie",
 	inventory_image = "cooking_apple_pie.png",
 	on_use = minetest.item_eat(10),
 })
-foodspoil_register("cooking:apple_pie", 14)
+fs_reg("cooking:apple_pie", fs_m)
 
 minetest.register_craftitem("cooking:pie_crust", {
 	description = "Pie Crust",
 	inventory_image = "cooking_pie_crust.png",
 })
-foodspoil_register("cooking:pie_crust", 14)
+fs_reg("cooking:pie_crust", fs_m)
 
 cooking.register_craft({
 	type = "roll",
@@ -165,10 +173,9 @@ minetest.register_craftitem("cooking:mushroom_soup_uncooked", {
 	--stack_max = 1,
 	inventory_image = "cooking_mushroom_soup_uncooked.png",
 	param2 = 224,
-	on_use = minetest.item_eat(4, "cooking:bowl"),
-	_cookingsimple = true
+	on_use = minetest.item_eat(4, "cooking:bowl")
 })
-foodspoil_register("cooking:mushroom_soup_uncooked", 14)
+fs_reg("cooking:mushroom_soup_uncooked", fs_m)
 
 minetest.register_craftitem("cooking:mushroom_soup", {
 	description = "Mushroom Soup",
@@ -177,7 +184,7 @@ minetest.register_craftitem("cooking:mushroom_soup", {
 	param2 = 222,
 	on_use = minetest.item_eat(6, "cooking:bowl")
 })
-foodspoil_register("cooking:mushroom_soup", 14)
+fs_reg("cooking:mushroom_soup", fs_m)
 
 cooking.register_craft({
 	type = "soup",
