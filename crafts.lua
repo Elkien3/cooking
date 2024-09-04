@@ -100,11 +100,13 @@ cooking.register_craft({
 cooking.register_craft({
 	type = "stack",
 	recipe = {"cooking:bread_sliced", "cooking:blueberry_jam"},
+	_cookingsimple = true,
 	output = "cooking:bread_blueberry_jam"
 })
 cooking.register_craft({
 	type = "stack",
 	recipe = {"cooking:toast", "cooking:blueberry_jam"},
+	_cookingsimple = true,
 	output = "cooking:toast_blueberry_jam"
 })
 cooking.register_craft({
@@ -173,7 +175,8 @@ minetest.register_craftitem("cooking:mushroom_soup_uncooked", {
 	--stack_max = 1,
 	inventory_image = "cooking_mushroom_soup_uncooked.png",
 	param2 = 224,
-	on_use = minetest.item_eat(4, "cooking:bowl")
+	on_use = minetest.item_eat(4, "cooking:bowl"),
+	_cookingsimple = true
 })
 fs_reg("cooking:mushroom_soup_uncooked", fs_m)
 
