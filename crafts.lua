@@ -51,14 +51,14 @@ fs_reg("cooking:toast", fs_m)
 minetest.register_craftitem("cooking:bread_blueberry_jam", {
 	description = "Bread with Blueberry Jam",
 	inventory_image = "cooking_bread_blueberry_jam.png",
-	on_use = minetest.item_eat(5),
+	on_use = minetest.item_eat(4),
 })
 fs_reg("cooking:bread_blueberry_jam", fs_f)
 
 minetest.register_craftitem("cooking:toast_blueberry_jam", {
 	description = "Toast with Blueberry Jam",
 	inventory_image = "cooking_toast_blueberry_jam.png",
-	on_use = minetest.item_eat(6),
+	on_use = minetest.item_eat(5),
 })
 fs_reg("cooking:toast_blueberry_jam", fs_f)
 
@@ -121,7 +121,7 @@ cooking.register_craft({
 	output = "cooking:bun"
 })
 
---apple pie
+--apple and blueberry pie
 minetest.register_craftitem("cooking:chopped_apple", {
 	description = "Chopped Apple",
 	inventory_image = "cooking_chopped_apple.png",
@@ -137,6 +137,19 @@ fs_reg("cooking:apple_pie_uncooked", fs_m)
 minetest.register_craftitem("cooking:apple_pie", {
 	description = "Apple Pie",
 	inventory_image = "cooking_apple_pie.png",
+	on_use = minetest.item_eat(10),
+})
+fs_reg("cooking:apple_pie", fs_m)
+
+minetest.register_craftitem("cooking:blueberry_pie_uncooked", {
+	description = "Uncooked Blueberry Pie",
+	inventory_image = "cooking_blueberry_pie_uncooked.png",
+})
+fs_reg("cooking:blueberry_pie_uncooked", fs_m)
+
+minetest.register_craftitem("cooking:blueberry_pie", {
+	description = "Blueberry Pie",
+	inventory_image = "cooking_blueberry_pie.png",
 	on_use = minetest.item_eat(10),
 })
 fs_reg("cooking:apple_pie", fs_m)
@@ -167,6 +180,17 @@ cooking.register_craft({
 	cooktime = 30,
 	recipe = "cooking:apple_pie_uncooked",
 	output = "cooking:apple_pie"
+})
+cooking.register_craft({
+	type = "stack",
+	recipe = {"cooking:pie_crust", "default:blueberries", "default:blueberries", "cooking:sugar", "cooking:pie_crust"},
+	output = "cooking:blueberry_pie_uncooked"
+})
+cooking.register_craft({
+	type = "oven",
+	cooktime = 30,
+	recipe = "cooking:blueberry_pie_uncooked",
+	output = "cooking:blueberry_pie"
 })
 
 --mushroom soup
